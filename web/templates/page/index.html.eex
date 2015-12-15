@@ -1,36 +1,34 @@
-<div class="jumbotron">
-  <h2>Welcome to Phoenix!</h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
-</div>
+<div id="gamecontainer">
+   <div id="gamescreen">
+      <div id="sky" class="animated">
+         <div id="flyarea">
+            <div id="ceiling" class="animated"></div>
+            <!-- This is the flying and pipe area container -->
+            <div id="player" class="bird animated"></div>
 
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="http://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-    </ul>
-  </div>
+            <div id="bigscore"></div>
 
-  <div class="col-lg-6">
-    <h4>Help</h4>
-    <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
-    </ul>
-  </div>
+            <div id="splash"></div>
+
+            <div id="scoreboard">
+               <div id="medal"></div>
+               <div id="currentscore"></div>
+               <div id="highscore"></div>
+               <div id="replay"><img src="<%= static_path(@conn, "/images/replay.png") %>" alt="replay"></div>
+            </div>
+
+            <!-- Pipes go here! -->
+         </div>
+      </div>
+      <div id="land" class="animated"><div id="debug"></div></div>
+   </div>
 </div>
+<div id="footer">
+   <a href="http://www.dotgears.com/">original game/concept/art by dong nguyen</a>
+   <a href="http://nebezb.com/">recreated by nebez briefkani</a>
+   <a href="http://github.com/nebez/floppybird/">view github project</a>
+</div>
+<div class="boundingbox" id="playerbox"></div>
+<div class="boundingbox" id="pipebox"></div>
+
+<script src="<%= static_path(@conn, "/js/app.js") %>"></script>
