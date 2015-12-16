@@ -60,3 +60,9 @@ config :logger, level: :info
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
 #import_config "prod.secret.exs"
+
+# Configure your database
+config :flappy_beer, FlappyBeer.Repo,
+  adapter: Ecto.Adapters.MySQL,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: 20
