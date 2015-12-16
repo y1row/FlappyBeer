@@ -1,0 +1,21 @@
+{
+  "name": "FlappyBeer",
+  "version": "1.0.0",
+  "homepage": "https://github.com/y1row/FlappyBeer",
+  "authors": [
+    "Yuuichiro KATO <y1row.kato@gmail.com>"
+  ],
+  "description": "Flappy bird clone",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mithril": "~0.2.0"
+  }
+}
