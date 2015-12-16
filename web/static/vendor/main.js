@@ -25,11 +25,7 @@ var states = Object.freeze({
 
 var currentstate;
 
-var gravity = 0.25;
-var velocity = 0;
-var position = 180;
-var rotation = 0;
-var jump = -4.6;
+var player = new Bird("#player");
 
 var score = 0;
 var highscore = 0;
@@ -89,14 +85,10 @@ function showSplash() {
     currentstate = states.SplashScreen;
 
     //set the defaults (again)
-    velocity = 0;
-    position = 180;
-    rotation = 0;
-    score = 0;
+    player.setDefault();
 
     //update the player in preparation for the next game
-    $("#player").css({y: 0, x: 0});
-    updatePlayer($("#player"));
+    player.update();
 
     soundSwoosh.stop();
     soundSwoosh.play();
@@ -138,30 +130,17 @@ function startGame() {
     playerJump();
 }
 
-function updatePlayer(player) {
-    //rotation
-    rotation = Math.min((velocity / 10) * 90, 90);
-
-    //apply rotation and position
-    $(player).css({rotate: rotation, top: position});
-}
-
 function gameloop() {
-    var player = $("#player");
-
-    //update the player speed/position
-    velocity += gravity;
-    position += velocity;
 
     //update the player
-    updatePlayer(player);
+    player.update();
 
     //create the bounding box
     var box = document.getElementById('player').getBoundingClientRect();
     var origwidth = 34.0;
     var origheight = 24.0;
 
-    var boxwidth = origwidth - (Math.sin(Math.abs(rotation) / 90) * 8);
+    var boxwidth = origwidth - (Math.sin(Math.abs(player.rotation) / 90) * 8);
     var boxheight = (origheight + box.height) / 2;
     var boxleft = ((box.width - boxwidth) / 2) + box.left;
     var boxtop = ((box.height - boxheight) / 2) + box.top;
@@ -262,7 +241,8 @@ function screenClick() {
 }
 
 function playerJump() {
-    velocity = jump;
+    player.jump();
+
     //play jump sound
     soundJump.stop();
     soundJump.play();
@@ -327,10 +307,7 @@ function playerDead() {
     $(".animated").css('-webkit-animation-play-state', 'paused');
 
     //drop the bird to the floor
-    var playerbottom = $("#player").position().top + $("#player").width(); //we use width because he'll be rotated 90 deg
-    var floor = $("#flyarea").height();
-    var movey = Math.max(0, floor - playerbottom);
-    $("#player").transition({y: movey + 'px', rotate: 90}, 1000, 'easeInOutCubic');
+    player.dead();
 
     //it's time to change states. as of now we're considered ScoreScreen to disable left click/flying
     currentstate = states.ScoreScreen;
