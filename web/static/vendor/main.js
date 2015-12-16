@@ -49,7 +49,7 @@ buzz.all().setVolume(volume);
 var loopGameloop;
 var loopPipeloop;
 
-$(document).ready(function () {
+function gameStart() {
     if (window.location.search == "?debug")
         debugmode = true;
     if (window.location.search == "?easy")
@@ -62,7 +62,7 @@ $(document).ready(function () {
 
     //start with the splash screen
     showSplash();
-});
+}
 
 function getCookie(cname) {
     var name = cname + "=";

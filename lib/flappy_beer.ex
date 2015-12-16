@@ -13,6 +13,8 @@ defmodule FlappyBeer do
       worker(FlappyBeer.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(FlappyBeer.Worker, [arg1, arg2, arg3]),
+      worker(FlappyBeer.LoginUser, []),
+      worker(FlappyBeer.Message, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

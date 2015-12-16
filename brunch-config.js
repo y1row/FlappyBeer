@@ -3,9 +3,9 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        "js/app.js": /^(web\/static\/js)/,
+        "js/app.js": /^(web\/static\/js)|(bower_components)/,
         "js/vendor.js": /^(web\/static\/vendor)|(deps)/
-      },
+      }
 
       // To use a separate vendor.js bundle, specify two files path
       // https://github.com/brunch/brunch/blob/stable/docs/config.md#files

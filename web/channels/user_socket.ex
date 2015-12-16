@@ -2,7 +2,7 @@ defmodule FlappyBeer.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", FlappyBeer.RoomChannel
+  channel "rooms:*", FlappyBeer.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
