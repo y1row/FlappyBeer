@@ -1,9 +1,3 @@
-export var Main = {
-    main: function(){
-        console.log("Hello!")
-    }
-}
-
 /*
  Copyright 2014 Nebez Briefkani
  floppybird - main.js
