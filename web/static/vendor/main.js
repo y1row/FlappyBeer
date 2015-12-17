@@ -15,6 +15,10 @@
  limitations under the License.
  */
 
+// web socket
+var socket;
+var channel;
+
 var debugmode = false;
 
 var states = Object.freeze({
@@ -399,6 +403,9 @@ $("#replay").click(function () {
 
 function playerScore() {
     score += 1;
+
+    channel.push("put_score", {body: score});
+
     //play score sound
     soundScore.stop();
     soundScore.play();

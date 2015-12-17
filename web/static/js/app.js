@@ -23,28 +23,29 @@ import {Socket} from "deps/phoenix/web/static/js/phoenix"
 
 let login = false;
 
-class SocketHandler {
+class LoginModel {
   constructor(ctrl) {
-    if (SocketHandler.instance) {
-      SocketHandler.instance.controller = ctrl;
-      return SocketHandler.instance
+    if (LoginModel.instance) {
+      LoginModel.instance.controller = ctrl;
+      return LoginModel.instance
     }
-    SocketHandler.instance = this;
+    LoginModel.instance = this;
     this.controller = ctrl;
     this.messages = m.prop([]);
-    this.socket = new Socket("/socket");
-    this.socket.connect();
-    this.channel = null
+
+    socket = new Socket("/socket");
+    socket.connect();
+    channel = null
   }
 
   login(name) {
-    this.channel = this.socket.channel("rooms:lobby", {name: name});
-    this.channel.on("new_msg", payload => {
+    channel = socket.channel("rooms:lobby", {name: name});
+    channel.on("put_score", payload => {
       m.startComputation();
       this.messages().splice(0, 0, payload);
-      m.endComputation()
+      m.endComputation();
     });
-    this.channel.join()
+    channel.join()
       .receive("ok", resp => {
         console.log("login ok: %o", resp);
         login = true;
@@ -61,10 +62,6 @@ class SocketHandler {
         this.controller.loginResult(false)
       })
   }
-
-  send(message) {
-    this.channel.push("new_msg", {body: message})
-  }
 }
 
 let LoginPage = {
@@ -72,7 +69,7 @@ let LoginPage = {
     this.name = m.prop("");
     this.error = m.prop("");
     this.login = () => {
-      let socket = new SocketHandler(this);
+      let socket = new LoginModel(this);
       socket.login(this.name());
     };
     this.loginResult = (isSuccess) => {
