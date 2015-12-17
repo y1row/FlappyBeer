@@ -11,7 +11,7 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-//import "deps/phoenix_html/web/static/js/phoenix_html"
+import "deps/phoenix_html/web/static/js/phoenix_html"
 
 // Import local files
 //
@@ -19,8 +19,7 @@
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
-
-import {Socket} from "deps/phoenix/web/static/js/phoenix"
+import {Socket} from "web/static/js/socket"
 
 let login = false;
 
@@ -92,12 +91,12 @@ let LoginPage = {
   },
   view(ctrl) {
     return m("div", [
-      m("label", {for: name}, "ユーザ名:"),
+      m("label", {for: name}, "enter name"),
       m("input#name[type=text]", {
         onchange: m.withAttr("value", ctrl.name),
         onkeypress: ctrl.onKeyPress
       }),
-      m("button", {onclick: ctrl.login}, "ログイン"),
+      m("button.button", {onclick: ctrl.login}, "Go!"),
       m(".error", ctrl.error())
     ])
   }

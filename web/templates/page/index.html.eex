@@ -4,7 +4,8 @@
          <div id="flyarea">
             <div id="ceiling" class="animated"></div>
             <!-- This is the flying and pipe area container -->
-            <div id="player" class="bird animated"><div id="login"></div></div>
+            <div id="player" class="bird animated"></div>
+            <div id="login"></div>
 
             <div id="bigscore"></div>
 

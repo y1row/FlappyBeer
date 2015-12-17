@@ -3,7 +3,7 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        "js/app.js": /^(web\/static\/js)|(bower_components)/,
+        "js/app.js": /^(web\/static\/js)|(bower_components)|(deps\/phoenix\/web\/static\/js\/phoenix)|(deps\/phoenix_html\/web\/static\/js\/phoenix_html)/,
         "js/vendor.js": /^(web\/static\/vendor)|(deps)/
       }
 
