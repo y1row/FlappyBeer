@@ -38,18 +38,18 @@ class SocketHandler {
   }
 
   login(name) {
-    this.channel = this.socket.channel("rooms:lobby", {name: name})
+    this.channel = this.socket.channel("rooms:lobby", {name: name});
     this.channel.on("new_msg", payload => {
-      m.startComputation()
-      this.messages().splice(0, 0, payload)
+      m.startComputation();
+      this.messages().splice(0, 0, payload);
       m.endComputation()
     });
     this.channel.join()
       .receive("ok", resp => {
-        console.log("login ok: %o", resp)
-        login = true
-        this.messages(resp.messages)
-        this.controller.loginResult(true)
+        console.log("login ok: %o", resp);
+        login = true;
+        this.messages(resp.messages);
+        this.controller.loginResult(true);
 
         $("#login").transition({opacity: 0}, 500, 'ease', function(){
           $("#login").remove();
@@ -57,7 +57,7 @@ class SocketHandler {
         });
       })
       .receive("error", resp => {
-        console.log("login error: %o", resp)
+        console.log("login error: %o", resp);
         this.controller.loginResult(false)
       })
   }
@@ -80,7 +80,7 @@ let LoginPage = {
         m.route("/")
       } else {
         m.startComputation()
-        this.error(this.name() + "はすでに使われています")
+        this.error(this.name() + " is already used.")
         this.name("")
         m.endComputation()
       }
@@ -112,35 +112,6 @@ let ChatPage = {
     if (!login) {
       return m.route("/login")
     }
-    this.message = m.prop("")
-    this.socket = new SocketHandler(this)
-    this.send = () => {
-      this.socket.send(this.message())
-      this.message("")
-    };
-    this.onKeyPress = (e) => {
-      if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
-        this.message(e.target.value)
-        this.send()
-      } else {
-        m.redraw.strategy("none")
-      }
-    }
-  },
-  view(ctrl) {
-    return m("div", [
-      m("input[type=text]", {
-        onchange: m.withAttr("value", ctrl.message),
-        onkeypress: ctrl.onKeyPress
-      }),
-      m("button", {onclick: ctrl.send}, "送信"),
-      m("div", ctrl.socket.messages().map((message) => {
-        return m("div", [
-          m("b", message.user + ": "),
-          message.body
-        ])
-      }))
-    ])
   }
 };
 

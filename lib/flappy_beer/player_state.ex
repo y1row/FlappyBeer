@@ -4,13 +4,9 @@ defmodule FlappyBeer.PlayerState do
   end
 
   def set(user, x, y, velocity, rotation) do
-    Agent.cast(__MODULE__, fn enum -> [{user, body}|enum] end)
-
     Agent.get_and_update(__MODULE__, fn enum ->
-      case Enum.any?(enum, fn {_pid, u} -> u === user end) do
-        true -> {:error, enum}
-        false -> {:ok, [{pid, name}|enum]}
-      end
+      user_data = Enum.find(enum, &(&1 === user))
+      user_data = {user, x, y, velocity, rotation}
     end)
   end
 
