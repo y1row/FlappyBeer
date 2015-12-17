@@ -14,7 +14,8 @@ defmodule FlappyBeer do
       # Here you could define other workers and supervisors as children
       # worker(FlappyBeer.Worker, [arg1, arg2, arg3]),
       worker(FlappyBeer.LoginUser, []),
-      worker(FlappyBeer.Message, [])
+      worker(FlappyBeer.PlayerState, []),
+      worker(FlappyBeer.Score, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

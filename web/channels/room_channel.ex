@@ -6,7 +6,8 @@ defmodule FlappyBeer.RoomChannel do
       :ok ->
         messages = FlappyBeer.Message.get
           |> Enum.map(fn {user, body} -> %{user: user, body: body} end)
-            {:ok, %{messages: messages}, socket}
+
+        {:ok, %{messages: messages}, socket}
       :error ->
         {:error, %{}}
     end
