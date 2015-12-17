@@ -19,21 +19,21 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
-import {Socket} from "web/static/js/socket"
+import {Socket} from "deps/phoenix/web/static/js/phoenix"
 
 let login = false;
 
 class SocketHandler {
   constructor(ctrl) {
     if (SocketHandler.instance) {
-      SocketHandler.instance.controller = ctrl
+      SocketHandler.instance.controller = ctrl;
       return SocketHandler.instance
     }
-    SocketHandler.instance = this
-    this.controller = ctrl
-    this.messages = m.prop([])
-    this.socket = new Socket("/socket")
-    this.socket.connect()
+    SocketHandler.instance = this;
+    this.controller = ctrl;
+    this.messages = m.prop([]);
+    this.socket = new Socket("/socket");
+    this.socket.connect();
     this.channel = null
   }
 
@@ -50,6 +50,11 @@ class SocketHandler {
         login = true
         this.messages(resp.messages)
         this.controller.loginResult(true)
+
+        $("#login").transition({opacity: 0}, 500, 'ease', function(){
+          $("#login").remove();
+          awake();
+        });
       })
       .receive("error", resp => {
         console.log("login error: %o", resp)
@@ -64,11 +69,11 @@ class SocketHandler {
 
 let LoginPage = {
   controller() {
-    this.name = m.prop("")
-    this.error = m.prop("")
+    this.name = m.prop("");
+    this.error = m.prop("");
     this.login = () => {
-      let socket = new SocketHandler(this)
-      socket.login(this.name())
+      let socket = new SocketHandler(this);
+      socket.login(this.name());
     };
     this.loginResult = (isSuccess) => {
       if (isSuccess) {

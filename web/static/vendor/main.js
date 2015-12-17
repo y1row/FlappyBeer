@@ -49,7 +49,7 @@ buzz.all().setVolume(volume);
 var loopGameloop;
 var loopPipeloop;
 
-function gameStart() {
+function awake() {
     if (window.location.search == "?debug")
         debugmode = true;
     if (window.location.search == "?easy")
