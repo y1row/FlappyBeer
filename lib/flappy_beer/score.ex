@@ -7,8 +7,9 @@ defmodule FlappyBeer.Score do
   end
 
   def put(user, score) do
-    Agent.update(__MODULE__, fn dict ->
+    Agent.get_and_update(__MODULE__, fn dict ->
       update_score(dict, user, dict[user], score)
+      {:ok, dict}
     end)
   end
 
