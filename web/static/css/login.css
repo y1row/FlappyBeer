@@ -12,6 +12,7 @@
     margin-right: 5px;
     color: #737373;
     border-radius: 5px;
+    -webkit-user-select : auto;
 }
 
 .button {
