@@ -3,29 +3,13 @@ defmodule FlappyBeer.Score do
   require Logger
 
   def start_link do
-    Agent.start_link(fn -> Map.new end, name: __MODULE__)
+    Agent.start_link(fn -> [] end, name: __MODULE__)
   end
 
   def put(user, score) do
-    Agent.get_and_update(__MODULE__, fn dict ->
-      update_score(dict, user, dict[user], score)
-      {:ok, dict}
+    Agent.update(__MODULE__, fn dict ->
+      Dict.put(dict, String.to_atom(user), score)
     end)
-  end
-
-  def update_score(dict, user, now_score, new_score) when now_score == nil do
-    Logger.debug("score updated. user : #{user}, score : #{new_score}")
-    Dict.put(dict, user, new_score)
-  end
-
-  def update_score(dict, user, now_score, new_score) when now_score < new_score do
-    Logger.debug("score updated(highscore). user : #{user}, score : #{new_score}")
-    Dict.put(dict, user, new_score)
-  end
-
-  def update_score(dict, user, _now_score, new_score) do
-    Logger.debug("score not updated. user : #{user}, score : #{new_score}")
-    dict
   end
 
   def get_highscore(n \\ 100) do
