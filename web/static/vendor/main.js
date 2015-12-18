@@ -132,7 +132,6 @@ function startGame() {
 
     //jump from the start!
     playerJump();
-    channel.push("put_score", {body: 1});
 }
 
 function gameloop() {

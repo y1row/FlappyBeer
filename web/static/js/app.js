@@ -42,7 +42,9 @@ class LoginModel {
     channel = socket.channel("rooms:lobby", {name: name});
     channel.on("put_score", payload => {
       m.startComputation();
-      this.messages().splice(0, 0, payload);
+      console.log("scores: %o", payload);
+
+
       m.endComputation();
     });
     channel.join()
@@ -51,6 +53,10 @@ class LoginModel {
         login = true;
         this.messages(resp.messages);
         this.controller.loginResult(true);
+
+        jQuery.each(resp.high_score, function() {
+          $("#scores").append("<ul>").append("<li>(" + this.user + ") " + this.high_score + "</li>");
+        });
 
         $("#login").transition({opacity: 0}, 500, 'ease', function(){
           $("#login").remove();
