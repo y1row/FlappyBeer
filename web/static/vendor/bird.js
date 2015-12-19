@@ -17,7 +17,6 @@ Bird.prototype.setDefault = function () {
     this.position_x = 60;
     this.position_y = 180;
     this.rotation = 0;
-    this.score = 0;
 
     $(this.dom).css({y: 0, x: 0});
 };

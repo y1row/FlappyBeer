@@ -49,7 +49,7 @@ class LoginModel {
       console.log("scores: %o", payload);
 
       var hit = false;
-      jQuery.each(high_scores, function() {
+      jQuery.each(high_scores, function () {
         if (this.user == payload.user) {
           this.score = payload.body;
           hit = true;
@@ -77,7 +77,7 @@ class LoginModel {
         high_scores = resp;
         this.update_score();
 
-        $("#login").transition({opacity: 0}, 500, 'ease', function(){
+        $("#login").transition({opacity: 0}, 500, 'ease', function () {
           $("#login").remove();
           awake();
         });
@@ -103,8 +103,17 @@ class LoginModel {
 
     $("#scores").empty();
     $("#scores").append("<table class=\"score\">");
-    jQuery.each(high_scores, function() {
-      $("#scores").append("<tr><td>" + this.user + "</td><td>" + this.score + "</td></tr>");
+    var rank = 1;
+    var me;
+    jQuery.each(high_scores, function () {
+      me = (user_name == this.user) ? " class=\"me\"" : "";
+
+      $("#scores").append("<tr" + me + "><td>"
+        + rank + "</td><td>"
+        + this.user + "</td><td>"
+        + this.score + "</td></tr>"
+      );
+      rank++;
     });
     $("#scores").append("</table>");
 
@@ -141,7 +150,7 @@ let LoginPage = {
   view(ctrl) {
     return m("div", [
       m("label", {for: name}, "enter name"),
-      m("input#name[type=text]", {
+      m("input#name[type=text][maxlength=8]", {
         onchange: m.withAttr("value", ctrl.name),
         onkeypress: ctrl.onKeyPress
       }),

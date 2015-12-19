@@ -88,6 +88,8 @@ function setCookie(cname, cvalue, exdays) {
 function showSplash() {
     currentstate = states.SplashScreen;
 
+    this.score = 0;
+
     //set the defaults (again)
     player.setDefault();
 

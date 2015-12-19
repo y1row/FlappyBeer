@@ -2,9 +2,13 @@
     position: absolute;
     right   : 0;
     margin  : 0;
-    z-index: 999;
+    z-index: 2000;
 }
 
 #scores td {
     padding-left: 10px;
+}
+
+#scores .me {
+    color: orangered;
 }
