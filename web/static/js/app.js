@@ -22,6 +22,8 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 import {Socket} from "deps/phoenix/web/static/js/phoenix"
 
 let login = false;
+var high_scores = [];
+var user_name;
 
 class LoginModel {
   constructor(ctrl) {
@@ -39,12 +41,30 @@ class LoginModel {
   }
 
   login(name) {
+    user_name = name;
+
     channel = socket.channel("rooms:lobby", {name: name});
     channel.on("put_score", payload => {
       m.startComputation();
       console.log("scores: %o", payload);
 
+      var hit = false;
+      jQuery.each(high_scores, function() {
+        if (this.user == payload.user) {
+          this.score = payload.body;
+          hit = true;
+          return;
+        }
+      });
 
+      if (hit == false) {
+        high_scores.push({
+          user: payload.user,
+          score: payload.body
+        });
+      }
+
+      this.update_score();
       m.endComputation();
     });
     channel.join()
@@ -54,9 +74,8 @@ class LoginModel {
         this.messages(resp.messages);
         this.controller.loginResult(true);
 
-        jQuery.each(resp.high_score, function() {
-          $("#scores").append("<ul>").append("<li>(" + this.user + ") " + this.high_score + "</li>");
-        });
+        high_scores = resp;
+        this.update_score();
 
         $("#login").transition({opacity: 0}, 500, 'ease', function(){
           $("#login").remove();
@@ -67,6 +86,28 @@ class LoginModel {
         console.log("login error: %o", resp);
         this.controller.loginResult(false)
       })
+  }
+
+  update_score() {
+
+    high_scores.sort(function (a, b) {
+      if (a.score > b.score) {
+        return -1;
+      }
+      if (a.score < b.score) {
+        return 1;
+      }
+      return 0;
+    });
+    console.log(high_scores);
+
+    $("#scores").empty();
+    $("#scores").append("<table class=\"score\">");
+    jQuery.each(high_scores, function() {
+      $("#scores").append("<tr><td>" + this.user + "</td><td>" + this.score + "</td></tr>");
+    });
+    $("#scores").append("</table>");
+
   }
 }
 

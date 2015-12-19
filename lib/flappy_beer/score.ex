@@ -18,6 +18,8 @@ defmodule FlappyBeer.Score do
           scores
       end
     end)
+
+    get_highscore
   end
 
   def get_highscore(n \\ 100) do

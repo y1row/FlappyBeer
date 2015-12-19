@@ -4,10 +4,7 @@ defmodule FlappyBeer.RoomChannel do
   def join("rooms:lobby", %{"name" => name}, socket) do
     case FlappyBeer.LoginUser.login(socket.channel_pid, name) do
       :ok ->
-        high_scores = FlappyBeer.Score.get_highscore
-          |> Enum.map(fn {user, high_score} -> %{user: user, high_score: high_score} end)
-
-        {:ok, %{high_score: high_scores}, socket}
+        {:ok, FlappyBeer.Score.get_highscore, socket}
       :error ->
         {:error, %{}}
     end

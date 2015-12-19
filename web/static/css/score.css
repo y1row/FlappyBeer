@@ -1,4 +1,10 @@
 #scores {
     position: absolute;
+    right   : 0;
+    margin  : 0;
     z-index: 999;
+}
+
+#scores td {
+    padding-left: 10px;
 }
