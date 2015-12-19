@@ -18,20 +18,20 @@
 -->
 
    <head>
-      <title>Floppy Beer</title>
+      <title>Flappy Beer</title>
       <meta http-equiv="content-type" content="text/html; charset=utf-8" />
       <meta name="author" content="Nebez Briefkani" />
-      <meta name="description" content="play floppy beer. a remake of popular game flappy beer using just html/css/js" />
-      <meta name="keywords" content="flappybeer,flappy,beer,floppybeer,floppy,html,html5,css,css3,js,javascript,jquery,github,nebez,briefkani,nebezb,open,source,opensource" />
+      <meta name="description" content="play flappy beer. a remake of popular game flappy beer using just html/css/js" />
+      <meta name="keywords" content="flappybeer,flappy,beer,flappybeer,flappy,html,html5,css,css3,js,javascript,jquery,github,nebez,briefkani,nebezb,open,source,opensource" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 
       <!-- Open Graph tags -->
-      <meta property="og:title" content="Floppy Beer" />
-      <meta property="og:description" content="play floppy beer. a remake of popular game flappy beer using just html/css/js" />
+      <meta property="og:title" content="Flappy Beer" />
+      <meta property="og:description" content="play flappy beer. a remake of popular game flappy bird using just html/css/js" />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content="http://nebez.github.io/floppybird/assets/thumb.png" />
-      <meta property="og:url" content="http://nebez.github.io/floppybird/" />
-      <meta property="og:site_name" content="Floppy Beer" />
+      <meta property="og:image" content="http://flappybeer.herokuapp.com/images/thumb.png" />
+      <meta property="og:url" content="http://flappybeer.herokuapp.com/" />
+      <meta property="og:site_name" content="Flappy Beer" />
 
       <!-- Style sheets -->
       <link href="<%= static_path(@conn, "/css/app.css") %>" rel="stylesheet">
