@@ -7,8 +7,16 @@ defmodule FlappyBeer.Score do
   end
 
   def put(user, score) do
-    Agent.update(__MODULE__, fn dict ->
-      Dict.put(dict, String.to_atom(user), score)
+    Agent.update(__MODULE__, fn scores ->
+      case Enum.find(scores, fn data -> data.user === user end) do
+        %{user: _u, score: s} when score > s ->
+          [%{user: user, score: score} |
+            Enum.reject(scores, fn data -> data.user === user end)]
+        nil ->
+          [%{user: user, score: score} | scores]
+        _ ->
+          scores
+      end
     end)
   end
 
