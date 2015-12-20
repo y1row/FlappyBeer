@@ -1,7 +1,8 @@
 defmodule FlappyBeer.RoomChannel do
   use FlappyBeer.Web, :channel
+  #require Logger
 
-  def join("rooms:lobby", %{"name" => name}, socket) do
+  def join("rooms:score", %{"name" => name}, socket) do
     case FlappyBeer.LoginUser.login(socket.channel_pid, name) do
       :ok ->
         {:ok, FlappyBeer.Score.get_highscore, socket}
@@ -18,7 +19,7 @@ defmodule FlappyBeer.RoomChannel do
     user = FlappyBeer.LoginUser.user(socket.channel_pid)
 
     case FlappyBeer.Score.put(user, body) do
-      %{user: upd_user, score: upd_score} when body == upd_score ->
+      %{user: user, score: upd_score} when body == upd_score ->
         broadcast! socket, "put_score", %{user: user, body: body}
       _ ->
     end
@@ -26,10 +27,12 @@ defmodule FlappyBeer.RoomChannel do
     {:noreply, socket}
   end
 
-  def handle_in("update_state", %{"body" => body}, socket) do
+  def handle_in("update_state", %{"x" => x, "y" => y, "velocity" => velocity, "rotation" => rotation}, socket) do
     user = FlappyBeer.LoginUser.user(socket.channel_pid)
-    FlappyBeer.Message.add(user, body)
-    broadcast! socket, "new_msg", %{user: user, body: body}
+    FlappyBeer.PlayerState.put(user, x, y, velocity, rotation)
+    broadcast! socket, "update_state", %{user: user, x: x, y: y, velocity: velocity, rotation: rotation}
+
+    #Logger.debug("state updated. user #{user}, x #{x}, y #{y}, velocity #{velocity}, rotation #{rotation}")
     {:noreply, socket}
   end
 

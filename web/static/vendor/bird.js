@@ -24,13 +24,14 @@ Bird.prototype.setDefault = function () {
 Bird.prototype.update = function () {
     //update the player speed/position
     this.velocity += this.gravity;
+    this.position_x += 2.22;
     this.position_y += this.velocity;
 
     //rotation
     this.rotation = Math.min((this.velocity / 10) * 90, 90);
 
     //apply rotation and position
-    $($(this.dom)).css({rotate: this.rotation, left: this.position_x, top: this.position_y});
+    $($(this.dom)).css({rotate: this.rotation, top: this.position_y});
 };
 
 Bird.prototype.jump = function () {

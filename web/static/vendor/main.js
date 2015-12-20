@@ -40,6 +40,9 @@ var pipes = new Array();
 
 var replayclickable = false;
 
+var forward_x = 0;
+var other_players = new Array();
+
 //sounds
 var volume = 30;
 var soundJump = new buzz.sound("/sounds/sfx_wing.ogg");
@@ -89,6 +92,7 @@ function showSplash() {
     currentstate = states.SplashScreen;
 
     this.score = 0;
+    this.forward_x = 0;
 
     //set the defaults (again)
     player.setDefault();
@@ -308,6 +312,14 @@ function setMedal() {
 }
 
 function playerDead() {
+
+    channel.push("update_state", {
+        x: player.position_x,
+        y: player.position_y,
+        velocity: player.velocity,
+        rotation: player.rotation
+    });
+
     //stop animating everything!
     $(".animated").css('animation-play-state', 'paused');
     $(".animated").css('-webkit-animation-play-state', 'paused');

@@ -3,11 +3,18 @@ defmodule FlappyBeer.PlayerState do
     Agent.start_link(fn -> [] end, name: __MODULE__)
   end
 
-  def set(user, x, y, velocity, rotation) do
-    Agent.get_and_update(__MODULE__, fn enum ->
-      user_data = Enum.find(enum, &(&1 === user))
-      user_data = {user, x, y, velocity, rotation}
+  def put(user, x, y, velocity, rotation) do
+    Agent.update(__MODULE__, fn scores ->
+      case Enum.find(scores, fn data -> data.user === user end) do
+        nil ->
+          [%{user: user, x: x, y: y, velocity: velocity, rotation: rotation} | scores]
+        _ ->
+          [%{user: user, x: x, y: y, velocity: velocity, rotation: rotation} |
+            Enum.reject(scores, fn data -> data.user === user end)]
+      end
     end)
+
+    get
   end
 
   def get(n \\ 100) do

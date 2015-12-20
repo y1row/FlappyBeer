@@ -43,7 +43,7 @@ class LoginModel {
   login(name) {
     user_name = name;
 
-    channel = socket.channel("rooms:lobby", {name: name});
+    channel = socket.channel("rooms:score", {name: name});
     channel.on("put_score", payload => {
       m.startComputation();
       console.log("scores: %o", payload);
@@ -65,6 +65,36 @@ class LoginModel {
       }
 
       this.update_score();
+      m.endComputation();
+    });
+    channel.on("update_state", payload => {
+      m.startComputation();
+      console.log("update_state: %o", payload);
+
+      var hit = false;
+      jQuery.each(other_players, function () {
+        if (this.user == payload.user) {
+          this.gravity    = payload.gravity;
+          this.velocity   = payload.velocity;
+          this.position_x = payload.x;
+          this.position_y = payload.y;
+          this.rotation   = payload.rotation;
+
+          hit = true;
+          return;
+        }
+      });
+
+      if (hit == false) {
+        var other_player = new Bird("other_" + payload.user);
+        other_player.gravity    = payload.gravity;
+        other_player.velocity   = payload.velocity;
+        other_player.position_x = payload.x;
+        other_player.position_y = payload.y;
+        other_player.rotation   = payload.rotation;
+        other_players.push(other_player);
+      }
+
       m.endComputation();
     });
     channel.join()
