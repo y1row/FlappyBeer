@@ -99,7 +99,7 @@ class LoginModel {
       }
       return 0;
     });
-    console.log(high_scores);
+    //console.log(high_scores);
 
     $("#scores").empty();
     $("#scores").append("<table class=\"score\">");

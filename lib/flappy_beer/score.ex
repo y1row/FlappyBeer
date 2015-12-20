@@ -19,7 +19,9 @@ defmodule FlappyBeer.Score do
       end
     end)
 
-    get_highscore
+    Agent.get(__MODULE__, fn scores ->
+      Enum.find(scores, fn data -> data.user === user end)
+    end)
   end
 
   def get_highscore(n \\ 100) do

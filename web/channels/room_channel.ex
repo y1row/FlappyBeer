@@ -16,8 +16,13 @@ defmodule FlappyBeer.RoomChannel do
 
   def handle_in("put_score", %{"body" => body}, socket) do
     user = FlappyBeer.LoginUser.user(socket.channel_pid)
-    FlappyBeer.Score.put(user, body)
-    broadcast! socket, "put_score", %{user: user, body: body}
+
+    case FlappyBeer.Score.put(user, body) do
+      %{user: upd_user, score: upd_score} when body == upd_score ->
+        broadcast! socket, "put_score", %{user: user, body: body}
+      _ ->
+    end
+
     {:noreply, socket}
   end
 
